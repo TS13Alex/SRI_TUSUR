@@ -61,21 +61,26 @@ if __name__ == "__main__":
     dict_of_summ = Summation(name_of_file)
     print (dict_of_summ)
 
+# Словарь для подсчета количества вхождений каждого уникального значения
+counts = defaultdict(int)
+
+# Путь к CSV-файлу
+filename = 'H:\programming\Developing\SRI_TUSUR\combined.csv'
+
+# Открытие файла для чтения
+with open(filename, newline='', encoding='cp1251') as csvfile:
+    # Создание объекта reader, который будет читать файл
+    csv_reader = csv.reader(csvfile)
     
+    # Проход по каждой строке файла
+    for row in csv_reader:
+        # Предполагается, что первый элемент каждой строки является ключом
+        key = row[0]
+        # Увеличение счетчика для данного ключа
+        counts[key] += 1
+
+# Вывод результата
+for key, value in counts.items():
+    print(f'{key}: {value}')
     
-    '''with open( "answer.csv", "r+", encoding='cp1251') as data:
-        writer = csv.writer(data)
-        for line in a :
-            writer.writerow(line)
-        with open("summation.csv", "w") as f:
-            writer = csv.writer(f)
-            count = 0
-            for i in data:
-                for j in data:
-                    if len(i)>=3:
-                        if (i[1] == j[1]):
-                            count += 1
-                        if (i not in(f)):
-                            i[2] = count
-                        writer.writerow(i)
-        '''              
+          
