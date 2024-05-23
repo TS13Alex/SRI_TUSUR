@@ -1,12 +1,29 @@
 import pandas as pd
 import csv
+import os
+from pathlib import Path
 from pathlib import WindowsPath
-file_paths = ['435314.009.csv', '468332.213.csv', '468361.174.csv', '468363.005.csv', '468363.005.csv', '468363.005.csv']
-combined = pd.DataFrame()
-for file in file_paths:
-    data = pd.read_csv(file, encoding= 'cp1251',)
-    combined = pd.concat([combined, data])
-combined.to_csv('combined.csv', encoding= 'cp1251',index= False, sep = ';')
+def geting_file_paths():
+    # Запрашиваем у пользователя путь к директории
+    directory_path = input("Введите путь к директории с файлами: ")
+
+    # Проверяем, является ли введенный путь абсолютной ссылкой
+    if not os.path.isabs(directory_path):
+        print("Введенный путь не является абсолютным.")
+    else:
+        # Получаем список всех файлов в директории
+        csv_files = []
+        for file in Path(directory_path).glob('**/*'):
+            if file.is_file() and file.suffix == '.csv':
+                csv_files.append(str(file))
+    return (csv_files)
+file_paths = geting_file_paths()
+with open( "combined.csv", "w", encoding='cp1251') as data:   
+    combined = pd.DataFrame()
+    for file in file_paths:
+        data = pd.read_csv(file, encoding= 'cp1251',)
+        combined = pd.concat([combined, data])
+    combined.to_csv('combined.csv', encoding= 'cp1251',index= False, sep = ';')
 
 def read_bom_csv(name_file: str):
     '''read csv file return list row'''
@@ -36,9 +53,6 @@ def Summation(name_file: str):
             count = 0
         return dictionary
 
-
-
-
 if __name__ == "__main__":
     p = WindowsPath(__file__)
     t = p.with_name('combined.csv')
@@ -65,5 +79,3 @@ if __name__ == "__main__":
                             i[2] = count
                         writer.writerow(i)
         '''              
-                       
-
