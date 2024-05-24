@@ -3,6 +3,8 @@ import csv
 import os
 from pathlib import Path
 from pathlib import WindowsPath
+from collections import defaultdict
+
 def geting_file_paths():
     # Запрашиваем у пользователя путь к директории
     directory_path = input("Введите путь к директории с файлами: ")
@@ -58,14 +60,14 @@ if __name__ == "__main__":
     t = p.with_name('combined.csv')
     a, b = read_bom_csv(t)
     name_of_file = p.with_name('answer.csv')
-    dict_of_summ = Summation(name_of_file)
-    print (dict_of_summ)
+    #dict_of_summ = Summation(name_of_file)
+    #print (dict_of_summ)
 
 # Словарь для подсчета количества вхождений каждого уникального значения
 counts = defaultdict(int)
 
 # Путь к CSV-файлу
-filename = 'H:\programming\Developing\SRI_TUSUR\combined.csv'
+filename = 'combined.csv'
 
 # Открытие файла для чтения
 with open(filename, newline='', encoding='cp1251') as csvfile:
