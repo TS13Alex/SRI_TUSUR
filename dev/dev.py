@@ -3,6 +3,7 @@ import csv
 import os
 from pathlib import Path
 from pathlib import WindowsPath
+from collections import defaultdict
 def geting_file_paths():
     # Запрашиваем у пользователя путь к директории
     directory_path = input("Введите путь к директории с файлами: ")
@@ -53,34 +54,45 @@ def Summation(name_file: str):
             count = 0
         return dictionary
 
-if __name__ == "__main__":
-    p = WindowsPath(__file__)
-    t = p.with_name('combined.csv')
-    a, b = read_bom_csv(t)
-    name_of_file = p.with_name('answer.csv')
-    dict_of_summ = Summation(name_of_file)
-    print (dict_of_summ)
+try:
+    if __name__ == "__main__":
+        p = WindowsPath(__file__)
+        t = p.with_name('combined.csv')
+        a, b = read_bom_csv(t)
+        name_of_file = p.with_name('answer.csv')
+        dict_of_summ = Summation(name_of_file)
+        print (dict_of_summ)
 
-# Словарь для подсчета количества вхождений каждого уникального значения
-counts = defaultdict(int)
+        # Словарь для подсчета количества вхождений каждого уникального значения
+        counts = defaultdict(int)
 
-# Путь к CSV-файлу
-filename = 'H:\programming\Developing\SRI_TUSUR\combined.csv'
+        # Путь к CSV-файлу
+        filename = 'combined.csv'
 
-# Открытие файла для чтения
-with open(filename, newline='', encoding='cp1251') as csvfile:
-    # Создание объекта reader, который будет читать файл
-    csv_reader = csv.reader(csvfile)
-    
-    # Проход по каждой строке файла
-    for row in csv_reader:
-        # Предполагается, что первый элемент каждой строки является ключом
-        key = row[0]
-        # Увеличение счетчика для данного ключа
-        counts[key] += 1
+        # Открытие файла для чтения
+        with open(filename, newline='', encoding='cp1251') as csvfile:
+        # Создание объекта reader, который будет читать файл
+            csv_reader = csv.reader(csvfile)
+        
+        # Проход по каждой строке файла
+        for row in csv_reader:
+            # Предполагается, что первый элемент каждой строки является ключом
+            key = row[0]
+            # Увеличение счетчика для данного ключа
+            counts[key] += 1
 
-# Вывод результата
-for key, value in counts.items():
-    print(f'{key}: {value}')
+        # Вывод результата
+        for key, value in counts.items():
+            print(f'{key}: {value}')
+            
+except FileNotFoundError:
+    print("File  not found.  Aborting")
+    sys.exit(1)
+except OSError:
+    print("OS error occurred trying to open ")
+    sys.exit(1)
+except Exception as err:
+    print(f"Unexpected error opening  is",repr(err))
+    sys.exit(1)  
     
           
