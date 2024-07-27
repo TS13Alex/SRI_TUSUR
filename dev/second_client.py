@@ -17,7 +17,7 @@ async def client2(host, port):
         
         await asyncio.sleep(2)  # Pause for a bit before sending next message
         
-        if input("Press any key to continue or 'q' to quit: ") == 'q':
+        if input("Press  'q' to quit: ") == 'q':
             break
     
     writer.close()
